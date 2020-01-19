@@ -25,6 +25,8 @@ struct Slider: View {
                 .foregroundColor(self.backgroundColor)
             GeometryReader { geometry in
                 ZStack(alignment: .center) {
+                    Rectangle()
+                        .foregroundColor(self.backgroundColor)
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(self.foregroundColor)
                         .frame(width: 40, height: geometry.size.height)
