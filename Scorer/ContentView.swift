@@ -152,9 +152,8 @@ struct ContentView: View {
                 .background(Color.yellow)
                 .cornerRadius(10)
                 .roundedBorder(Color.gray, lineWidth: 3, cornerRadius: 13)
-        }
-        .popSheet(item: $presentAddBet) { t in
-            PopSheet(
+        }.actionSheet(item: $presentAddBet) { t in
+            ActionSheet(
                 title: Text("Bet type"),
                 buttons: [
                     .default(Text("Tichu")) {
