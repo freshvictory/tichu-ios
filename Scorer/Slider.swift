@@ -12,7 +12,6 @@ import SwiftUI
 
 struct Slider: View {
     @Binding var value: Double
-    @State private var percentage: Double = 50
     var minValue = 0.0
     var maxValue = 100.0
     var step = 1.0
@@ -30,7 +29,7 @@ struct Slider: View {
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(self.foregroundColor)
                         .frame(width: 40, height: geometry.size.height)
-                        .position(x: geometry.size.width * CGFloat(self.percentage / 100), y: geometry.size.height / 2)
+                        .position(x: geometry.size.width * CGFloat((self.value - self.minValue) / (self.maxValue - self.minValue)), y: geometry.size.height / 2)
                 }
                 .gesture(DragGesture(minimumDistance: 0)
                     .onChanged({ value in
@@ -38,12 +37,10 @@ struct Slider: View {
 
                         let offsetValue = percentage * (self.maxValue - self.minValue) + self.minValue
                         let roundedValue = self.step * round(offsetValue / self.step)
-                        self.value = roundedValue
-                        let steppedPercentage = (roundedValue - self.minValue) / (self.maxValue - self.minValue) * 100
-                        if steppedPercentage != self.percentage {
+                        if roundedValue != self.value {
                             // TODO: haptics
                         }
-                        self.percentage = steppedPercentage
+                        self.value = roundedValue
                     }))
             }
             .padding(.horizontal, 32)
