@@ -57,6 +57,7 @@ struct ContentView: View {
                 .font(Font.system(size: 32))
         }
         .background(Color.white)
+        .cornerRadius(10)
         .roundedBorder(Color.gray, lineWidth: 3, cornerRadius: 10)
     }
     
@@ -78,8 +79,8 @@ struct ContentView: View {
             .cornerRadius(10)
             .roundedBorder(Color.gray, lineWidth: 3, cornerRadius: 10)
             .fixedSize()
-            Slider(value: $state.turnScore, minValue: -25, maxValue: 125, step: 5, foregroundColor: .yellow, backgroundColor: .gray)
-                .frame(width: 300, height: 50)
+            Slider(value: $state.turnScore, foregroundColor: .yellow, backgroundColor: .white, borderColor: .gray)
+                .frame(width: 200, height: 50)
         }
     }
     
