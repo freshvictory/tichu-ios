@@ -19,7 +19,8 @@ struct Slider: View {
     var backgroundColor = Color.gray
     
     var body: some View {
-        ZStack {
+        let haptic = UISelectionFeedbackGenerator()
+        return ZStack {
             Rectangle()
                 .foregroundColor(self.backgroundColor)
             GeometryReader { geometry in
@@ -38,7 +39,7 @@ struct Slider: View {
                         let offsetValue = percentage * (self.maxValue - self.minValue) + self.minValue
                         let roundedValue = self.step * round(offsetValue / self.step)
                         if roundedValue != self.value {
-                            // TODO: haptics
+                            haptic.selectionChanged()
                         }
                         self.value = roundedValue
                     }))
