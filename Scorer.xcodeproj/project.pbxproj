@@ -16,7 +16,6 @@
 		D005A3FB23D3BBB500A7E91B /* ScorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D005A3FA23D3BBB500A7E91B /* ScorerTests.swift */; };
 		D005A40623D3BBE700A7E91B /* Scorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D005A40523D3BBE700A7E91B /* Scorer.swift */; };
 		D005A40723D3BBE700A7E91B /* Scorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D005A40523D3BBE700A7E91B /* Scorer.swift */; };
-		D005A40923D406A600A7E91B /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D005A40823D406A600A7E91B /* Slider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +41,6 @@
 		D005A3FA23D3BBB500A7E91B /* ScorerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorerTests.swift; sourceTree = "<group>"; };
 		D005A3FC23D3BBB500A7E91B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D005A40523D3BBE700A7E91B /* Scorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scorer.swift; sourceTree = "<group>"; };
-		D005A40823D406A600A7E91B /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +90,6 @@
 				D005A3F123D3BBB500A7E91B /* Info.plist */,
 				D005A3EB23D3BBB500A7E91B /* Preview Content */,
 				D005A40523D3BBE700A7E91B /* Scorer.swift */,
-				D005A40823D406A600A7E91B /* Slider.swift */,
 			);
 			path = Scorer;
 			sourceTree = "<group>";
@@ -219,7 +216,6 @@
 				D005A40623D3BBE700A7E91B /* Scorer.swift in Sources */,
 				D005A3E623D3BBB400A7E91B /* SceneDelegate.swift in Sources */,
 				D005A3E823D3BBB400A7E91B /* ContentView.swift in Sources */,
-				D005A40923D406A600A7E91B /* Slider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

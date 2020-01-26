@@ -34,6 +34,19 @@ enum Seat {
             return .horizontal
         }
     }
+    
+    var opposite: Seat {
+        switch self {
+        case .north:
+            return .south
+        case .south:
+            return .north
+        case .east:
+            return .west
+        case .west:
+            return .east
+        }
+    }
 }
 
 struct Player {
@@ -45,6 +58,24 @@ struct Player {
 enum Team: String {
     case vertical
     case horizontal
+    
+    var seats: (Seat, Seat) {
+        switch self {
+        case .vertical:
+            return (.north, .south)
+        case .horizontal:
+            return (.east, .west)
+        }
+    }
+    
+    var opposite: Team {
+        switch self {
+        case .vertical:
+            return .horizontal
+        case .horizontal:
+            return .vertical
+        }
+    }
 }
 
 extension Team: Identifiable {
@@ -77,6 +108,15 @@ enum First {
             }
         }
     }
+    
+    var isConsecutive: Bool {
+        switch self {
+        case .one(_, _):
+            return false
+        case .team(_):
+            return true
+        }
+    }
 }
 
 struct HistoryItem {
@@ -100,25 +140,18 @@ struct HistoryItem {
     }
 }
 
-struct PlayerBets: Sequence {
-    private var north: Bet = .zero
-    private var south: Bet = .zero
-    private var east: Bet = .zero
-    private var west: Bet = .zero
-    
-    func makeIterator() -> PlayerBets.Iterator {
-        return PlayerBets.Iterator(self)
-    }
+struct PlayerBets {
+    private var bets: Dictionary<Seat, Bet> = [:]
     
     func results(_ firstOut: First) -> (Int, Int) {
         var vertScore = 0
         var horzScore = 0
         
-        for player in self {
-            let multiplier = firstOut.seat == player.seat ? 1 : -1
-            let score = multiplier * player.bet.rawValue
+        for (seat, bet) in self.bets {
+            let multiplier = firstOut.seat == seat ? 1 : -1
+            let score = multiplier * bet.rawValue
             
-            switch player.team {
+            switch seat.team {
             case .vertical:
                 vertScore += score
             case .horizontal:
@@ -129,63 +162,27 @@ struct PlayerBets: Sequence {
         return (vertScore, horzScore)
     }
     
-    func getTeamBets(_ team: Team) -> (Player, Player) {
-        let players =  self.filter { p in
-            p.team == team
+    func getAvailableFirstOut() -> Seat {
+        for seat: Seat in [.north, .east, .south, .west] {
+            if self.bets[seat] == nil {
+                return seat
+            }
         }
-
-        return (players[0], players[1])
+        
+        return .west
+    }
+    
+    func getTeamBets(_ team: Team) -> (Player, Player) {
+        (Player(seat: team.seats.0, bet: getBet(team.seats.0)),
+         Player(seat: team.seats.1, bet: getBet(team.seats.1)))
     }
     
     func getBet(_ seat: Seat) -> Bet {
-        switch seat {
-        case .north:
-            return north
-        case .south:
-            return south
-        case .east:
-            return east
-        case .west:
-            return west
-        }
+        return self.bets[seat] ?? .zero
     }
     
     mutating func setBet(_ seat: Seat, bet: Bet) {
-        switch seat {
-        case .north:
-            north = bet
-        case .south:
-            south = bet
-        case .east:
-            east = bet
-        case .west:
-            west = bet
-        }
-    }
-
-    struct Iterator: IteratorProtocol {
-        typealias Element = Player
-        let bets: PlayerBets
-        var times = 0
-        
-        init(_ playerBets: PlayerBets) {
-            bets = playerBets
-        }
-        
-        mutating func next() -> Player? {
-            times += 1
-            if times == 1 {
-                return Player(seat: .north, bet: bets.north)
-            } else if times == 2 {
-                return Player(seat: .south, bet: bets.south)
-            } else if times == 3 {
-                return Player(seat: .east, bet: bets.east)
-            } else if times == 4 {
-                return Player(seat: .west, bet: bets.west)
-            } else {
-                return nil
-            }
-        }
+        self.bets[seat] = bet
     }
 }
 
